@@ -37,6 +37,6 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: ls
     - name: Build with Gradle
       run: echo build Test
