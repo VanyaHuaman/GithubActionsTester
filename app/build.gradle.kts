@@ -5,6 +5,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("_KEYSTORE") ?: "error")
+            storePassword = System.getenv("_KEYSTORE_PASSWORD") ?: "error"
+            keyAlias = System.getenv("_KEY_ALIAS") ?: "error"
+            keyPassword = System.getenv("_KEY_PASSWORD") ?: "error"
+        }
+
+        getByName("debug") {
+            storeFile = file("../keystore/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
     namespace = "com.example.githubactionstester"
     compileSdk = 35
 
@@ -19,12 +34,32 @@ android {
     }
 
     buildTypes {
+        flavorDimensions += "base"
+        productFlavors {
+            create("staging") {
+                isDefault = true
+                dimension = "base"
+                applicationIdSuffix = ".staging"
+            }
+            create("production") {
+                dimension = "base"
+                applicationIdSuffix = ".production"
+            }
+        }
         release {
-            isMinifyEnabled = false
+            isDebuggable = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            isDefault = true
+            isDebuggable = true
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
