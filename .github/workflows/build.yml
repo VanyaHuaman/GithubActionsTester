@@ -60,4 +60,4 @@ jobs:
        _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
        _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
        _KEY_PASSWORD: ${{ secrets._KEY_AlIAS_PASSWORD }}
-      run: ./gradlew --no-daemon bundleProductionSigned
+      run: ./gradlew --no-daemon bundleProductionRelease
