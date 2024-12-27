@@ -7,7 +7,7 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("_KEYSTORE") ?: "error")
+            storeFile = file(System.getenv("_RELEASE_KEYSTORE") ?: "error")
             storePassword = System.getenv("_KEYSTORE_PASSWORD") ?: "error"
             keyAlias = System.getenv("_KEY_ALIAS") ?: "error"
             keyPassword = System.getenv("_KEY_PASSWORD") ?: "error"
