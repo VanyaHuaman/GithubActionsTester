@@ -3,25 +3,10 @@ name: Build
 on:
   workflow_dispatch:
     inputs:
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
       environment:
         description: 'Environment to run tests against'
         type: string
-        required: true
-  repository_dispatch:
-    types: [trigger-build-process]
-    inputs:
-      tags:
-        description: 'Test scenario tags'
         required: false
-        type: boolean
-      environment:
-        description: 'Environment to run tests against'
-        type: string
-        required: true
 
 env:
   LOCAL_RELEASE_KEYSTORE_FILENAME: 'release_keystore.keystore'
@@ -40,9 +25,12 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
     - name: Retrieve keystore
       env:
-        KEYSTORE_FILE_BASE64: ${{ secrets._RELEASE_KEYSTORE }}
+        KEYSTORE_FILE_BASE64: ${{ secrets.RELEASE_KEYSTORE }}
       run: |
           echo "$KEYSTORE_FILE_BASE64" | base64 --decode > release_keystore.keystore
           keystore_path=$(realpath release_keystore.keystore)
@@ -60,4 +48,4 @@ jobs:
        _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
        _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
        _KEY_PASSWORD: ${{ secrets._KEY_AlIAS_PASSWORD }}
-      run: ./gradlew --no-daemon bundleProductionRelease
+      run: ./gradlew bundleProductionRelease
