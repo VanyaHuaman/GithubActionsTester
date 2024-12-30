@@ -9,7 +9,7 @@ on:
         required: false
 
 env:
-  LOCAL_RELEASE_KEYSTORE_FILENAME: 'release_keystore.keystore'
+  LOCAL_RELEASE_KEYSTORE_FILENAME: '_signed_keystore.keystore'
 
 jobs:
   build:
@@ -30,10 +30,10 @@ jobs:
 
     - name: Retrieve keystore
       env:
-        KEYSTORE_FILE_BASE64: ${{ secrets.RELEASE_KEYSTORE }}
+        KEYSTORE_FILE_BASE64: ${{ secrets._SIGNED_KEYSTORE }}
       run: |
-          echo "$KEYSTORE_FILE_BASE64" | base64 --decode > release_keystore.keystore
-          keystore_path=$(realpath release_keystore.keystore)
+          echo "$KEYSTORE_FILE_BASE64" | base64 --decode > _signed_keystore.keystore
+          keystore_path=$(realpath _signed_keystore.keystore)
           echo "KEYSTORE_PATH=${keystore_path}" >> "$GITHUB_ENV"
           md5sum ${keystore_path}
 
@@ -46,6 +46,6 @@ jobs:
       env:
        _KEYSTORE: ${{ env.KEYSTORE_PATH }}
        _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
-       _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
+       _KEY_ALIAS: ${{ env._KEY_ALIAS }}
        _KEY_PASSWORD: ${{ secrets._KEY_AlIAS_PASSWORD }}
       run: ./gradlew bundleProductionRelease
