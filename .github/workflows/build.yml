@@ -46,6 +46,6 @@ jobs:
       env:
        _KEYSTORE: ${{ env.KEYSTORE_PATH }}
        _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
-       _KEY_ALIAS: ${{ env._KEY_ALIAS }}
+       _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
        _KEY_PASSWORD: ${{ secrets._KEY_AlIAS_PASSWORD }}
       run: ./gradlew bundleProductionRelease
