@@ -10,7 +10,7 @@ android {
             storeFile = file(System.getenv("_KEYSTORE_PATH") ?: "error")
             storePassword = System.getenv("_KEYSTORE_PASSWORD") ?: "error"
             keyAlias = System.getenv("_KEY_ALIAS") ?: "error"
-            keyPassword = System.getenv("_KEY_AlIAS_PASSWORD") ?: "error"
+            keyPassword = System.getenv("_KEY_ALIAS_P") ?: "error"
         }
 
         getByName("debug") {

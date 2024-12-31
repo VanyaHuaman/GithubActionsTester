@@ -12,7 +12,7 @@ env:
   LOCAL_RELEASE_KEYSTORE_FILENAME: '_signed_keystore.keystore'
   _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
   _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
-  _KEY_ALIAS_PASSWORD: ${{ secrets._KEY_AlIAS_PASSWORD }}
+  _KEY_ALIAS_P: ${{ secrets._KEY_ALIAS_P }}
 
 jobs:
   build:
