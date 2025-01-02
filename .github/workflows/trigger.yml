@@ -1,0 +1,33 @@
+
+name: Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: 'Prod for both Production and Staging.'
+        type: string
+        required: true
+      version:
+        description: 'version passed'
+        type: string
+        required: true
+
+jobs:
+  triggerRemoteAction:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger Android Build
+        run: |
+          event_type="trigger-build" 
+          variant=${{ github.event.inputs.variant }}"
+          version="${{ github.event.inputs.version }}"
+        
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/VanyaHuaman/GithubActionsTester/dispatches \
+          -d "{\"event_type\": \"$event_type\", \"client_payload\": {\"variant\": \"$variant\", \"version\": \"$version\"}}"
