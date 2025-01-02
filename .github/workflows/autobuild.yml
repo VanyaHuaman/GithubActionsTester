@@ -8,7 +8,6 @@ on:
 
 jobs:
   auto_build:
-    runs-on: ubuntu-latest
     uses: VanyaHuaman/GithubActionsTester/.github/workflows/build.yml@master
     secrets: inherit
 
