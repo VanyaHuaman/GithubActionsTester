@@ -10,4 +10,4 @@ jobs:
   auto_build:
     uses: VanyaHuaman/GithubActionsTester/.github/workflows/build.yml@master
     secrets: inherit
-
+    inputs: inherit
