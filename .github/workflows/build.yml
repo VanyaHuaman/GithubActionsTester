@@ -3,8 +3,8 @@ name: Build
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Environment to run tests against'
+      variant:
+        description: 'Prod for both Production and Staging.'
         type: string
         required: false
 
@@ -16,11 +16,10 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
+
     - name: set up JDK 17
       uses: actions/setup-java@v4
       with:
@@ -43,9 +42,35 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
+    - name: Build Staging Debug
+      id: build_staging_debug
+      continue-on-error: false
+      run: ./gradlew bundleStagingDebug
+
+    - name: Build Production Release
       id: build_production_release
+      if: ${{ inputs.variant == 'Prod' }}
       continue-on-error: false
       env:
        _KEYSTORE_PATH: ${{ env.KEYSTORE_PATH }}
       run: ./gradlew bundleProductionRelease
+
+    - name: Summary
+      id: summary
+      continue-on-error: false
+      env:
+        _ACTOR: ${{ github.actor }}
+        _RUN_NUMBER: ${{ github.run_number }}
+        _BRANCH: ${{ github.ref_name }}
+        _BUILD_VARIANT_INPUT: ${{ inputs.variant }}
+        _STAGING_DEBUG_SUCCESS: ${{ steps.build_staging_debug.conclusion == 'success' }}
+        _PRODUCTION_RELEASE_SUCCESS: ${{ steps.build_production_release.conclusion == 'success' }}
+      run: |
+          echo "********************************OUTPUT*************************************"
+          echo "$_ACTOR Triggered a Build"
+          echo "Run Number: $_RUN_NUMBER"
+          echo "Branch: $_BRANCH"
+          echo "Build Variant Input: $_BUILD_VARIANT_INPUT"
+          echo "Staging debug was successful: $_STAGING_DEBUG_SUCCESS"
+          echo "Production Release was successful: $_PRODUCTION_RELEASE_SUCCESS"
+          echo "**********************************END***************************************"
