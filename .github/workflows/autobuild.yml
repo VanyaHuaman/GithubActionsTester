@@ -5,15 +5,10 @@ name: AutoBuild
 on:
   repository_dispatch:
     types: [trigger-build]
-    inputs:
-      variant:
-        description: 'Prod for both Production and Staging.'
-        type: string
-        required: false
 
 jobs:
   auto_build:
     uses: VanyaHuaman/GithubActionsTester/.github/workflows/build.yml@master
     secrets: inherit
     with:
-      variant: ${{ inputs.variant }}
+      variant: ${{ github.event.client_payload.variant }}
