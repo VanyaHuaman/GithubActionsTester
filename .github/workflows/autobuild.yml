@@ -1,0 +1,20 @@
+# This is a basic workflow to help you get started with Actions
+
+name: AutoBuild
+
+on:
+  repository_dispatch:
+    types: [trigger-build]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.sha }}
+
+      - name: Run Build
+        run: echo ":"
