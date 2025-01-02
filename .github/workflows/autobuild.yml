@@ -12,3 +12,4 @@ jobs:
     secrets: inherit
     with:
       variant: ${{ github.event.client_payload.variant }}
+      version: ${{ github.event.client_payload.version }}
