@@ -7,10 +7,18 @@ on:
         description: 'Prod for both Production and Staging.'
         type: string
         required: false
+      version:
+        description: 'version passed'
+        type: string
+        required: false
   workflow_call:
     inputs:
       variant:
         description: 'Prod for both Production and Staging.'
+        type: string
+        required: false
+      version:
+        description: 'version passed'
         type: string
         required: false
 
@@ -69,6 +77,7 @@ jobs:
         _RUN_NUMBER: ${{ github.run_number }}
         _BRANCH: ${{ github.ref_name }}
         _BUILD_VARIANT_INPUT: ${{ inputs.variant }}
+        _BUILD_VERSION_INPUT: ${{ inputs.version }}
         _STAGING_DEBUG_SUCCESS: ${{ steps.build_staging_debug.conclusion == 'success' }}
         _PRODUCTION_RELEASE_SUCCESS: ${{ steps.build_production_release.conclusion == 'success' }}
       run: |
@@ -77,6 +86,7 @@ jobs:
           echo "Run Number: $_RUN_NUMBER"
           echo "Branch: $_BRANCH"
           echo "Build Variant Input: $_BUILD_VARIANT_INPUT"
+          echo "Build Version Input: $_BUILD_VERSION_INPUT"
           echo "Staging debug was successful: $_STAGING_DEBUG_SUCCESS"
           echo "Production Release was successful: $_PRODUCTION_RELEASE_SUCCESS"
           echo "**********************************END***************************************"
