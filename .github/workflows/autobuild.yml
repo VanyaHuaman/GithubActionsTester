@@ -7,7 +7,7 @@ on:
     types: [trigger-build]
 
 jobs:
-  build:
+  auto_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,4 +18,3 @@ jobs:
 
       - name: Run Build
         uses: VanyaHuaman/GithubActionsTester/.github/workflows/build.yml@master
-        run: echo ":"
