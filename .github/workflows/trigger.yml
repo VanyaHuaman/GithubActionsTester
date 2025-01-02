@@ -19,6 +19,7 @@ jobs:
     
     steps:
       - name: Trigger Android Build
+        id: trigger_android_build
         run: |
           event_type="trigger-build" 
           variant=${{ github.event.inputs.variant }}"
