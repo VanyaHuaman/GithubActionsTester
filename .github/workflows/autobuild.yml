@@ -9,12 +9,6 @@ on:
 jobs:
   auto_build:
     runs-on: ubuntu-latest
+    uses: VanyaHuaman/GithubActionsTester/.github/workflows/build.yml@master
+    secrets: inherit
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.sha }}
-
-      - name: Run Build
-        uses: VanyaHuaman/GithubActionsTester/.github/workflows/build.yml@master
