@@ -27,6 +27,8 @@ env:
   _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
   _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
   _KEY_ALIAS_P: ${{ secrets._KEY_ALIAS_P }}
+  VARIANT: ${{ github.event.inputs.variant }}
+  VERSION: ${{ github.event.inputs.version }}
 
 jobs:
   build:
@@ -43,6 +45,12 @@ jobs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+
+    - name: Print Inputs
+      id: print_inputs
+      run: |
+            echo "****INPUT**** VARIANT:${{ env.VARIANT }}"
+            echo "****INPUT**** VERSION:${{ env.VERSION }}"
 
     - name: Retrieve keystore
       env:
