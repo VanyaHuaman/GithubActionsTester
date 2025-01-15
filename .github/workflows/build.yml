@@ -49,8 +49,8 @@ jobs:
     - name: Print Inputs
       id: print_inputs
       env:
-        VARIANT: ${{ env.VARIANT }}
-        VERSION: ${{ env.VERSION }}
+        VARIANT: ${{ github.event.inputs.variant }}
+        VERSION: ${{ github.event.inputs.version }}
       run: |
             echo "****INPUT**** VARIANT:$VARIANT"
             echo "****INPUT**** VERSION:$VERSION"
