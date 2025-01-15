@@ -27,8 +27,8 @@ env:
   _KEYSTORE_PASSWORD: ${{ secrets._KEYSTORE_PASSWORD }}
   _KEY_ALIAS: ${{ secrets._KEY_ALIAS }}
   _KEY_ALIAS_P: ${{ secrets._KEY_ALIAS_P }}
-  VARIANT: ${{ github.event.inputs.variant }}
-  VERSION: ${{ github.event.inputs.version }}
+  VARIANT: ${{ inputs.variant }}
+  VERSION: ${{ inputs.version }}
 
 jobs:
   build:
@@ -87,8 +87,8 @@ jobs:
         _ACTOR: ${{ github.actor }}
         _RUN_NUMBER: ${{ github.run_number }}
         _BRANCH: ${{ github.ref_name }}
-        _BUILD_VARIANT_INPUT: ${{ inputs.variant }}
-        _BUILD_VERSION_INPUT: ${{ inputs.version }}
+        _BUILD_VARIANT_INPUT: ${{ env.VARIANT }}
+        _BUILD_VERSION_INPUT: ${{ env.VERSION }}
         _STAGING_DEBUG_SUCCESS: ${{ steps.build_staging_debug.conclusion == 'success' }}
         _PRODUCTION_RELEASE_SUCCESS: ${{ steps.build_production_release.conclusion == 'success' }}
       run: |

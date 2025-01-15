@@ -21,8 +21,8 @@ jobs:
       id: trigger_android_build
       run: |
         event_type="trigger-build"
-        variant="${{ github.event.inputs.variant }}"
-        version="${{ github.event.inputs.version }}"
+        variant="${{ inputs.variant }}"
+        version="${{ inputs.version }}"
 
         curl -L \
         -X POST \
