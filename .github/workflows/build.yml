@@ -48,9 +48,12 @@ jobs:
 
     - name: Print Inputs
       id: print_inputs
+      env:
+        VARIANT: ${{ env.VARIANT }}
+        VERSION: ${{ env.VERSION }}
       run: |
-            echo "****INPUT**** VARIANT:${{ env.VARIANT }}"
-            echo "****INPUT**** VERSION:${{ env.VERSION }}"
+            echo "****INPUT**** VARIANT:$VARIANT"
+            echo "****INPUT**** VERSION:$VERSION"
 
     - name: Retrieve keystore
       env:
